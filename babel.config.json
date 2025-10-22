@@ -1,0 +1,16 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "modules": false,
+                "targets": {
+                    "node": "current"
+                }
+            }
+        ]
+    ],
+    "ignore": [
+        "node_modules"
+    ]
+}

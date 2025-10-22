@@ -1,0 +1,38 @@
+{
+  "name": "langchain_chatbot",
+  "version": "1.0.0",
+  "main": "App.js",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/app.js",
+    "dev": "nodemon --exec babel-node src/app.js",
+    "build": "babel src -d dist",
+    "clean": "rm -rf dist",
+    "rebuild": "npm run clean && npm run build",
+    "rebuild-start": "npm run rebuild && npm start",
+    "rebuild-dev": "npm run rebuild && npm run dev",
+    "clear-cache": "rm -rf node_modules/.cache dist",
+    "install-legacy": "npm install --legacy-peer-deps",
+    "git-refresh-case": "git rm --cached -r . || true && git add -A && git commit -m \"chore: refresh case-sensitive filenames\" || true",
+    "fix-envconfig-case": "node -e \"const fs=require('fs'); if(fs.existsSync('config/envConfig.js')) fs.renameSync('config/envConfig.js','config/EnvConfig.js');\" || true",
+    "prebuild": "npm run clear-cache"
+  },
+  "repository": "https://github.com/PaulElisha/QuoteGenerator.git",
+  "author": "Paul Elisha <ireajao@yahoo.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.0",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.22.20",
+    "dotenv": "^17.2.3",
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "@langchain/community": "^0.3.57",
+    "@langchain/core": "^0.3.78",
+    "@langchain/openai": "^0.6.16",
+    "@supabase/supabase-js": "^2.76.1",
+    "langchain": "^0.3.36"
+  }
+}
