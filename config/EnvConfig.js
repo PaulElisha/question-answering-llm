@@ -8,9 +8,9 @@ dotenv.config({ path: ".env" });
 // SUPABASE_KEY - Supabase service role or anon key
 
 const EnvConfig = {
-  OPENAI_API: process.env.OPENAI_API || process.env.OPEN_AI_API_KEY || process.env.OPEN_AI_API,
-  SUPABASE_URL: process.env.SUPABASE_URL || process.env.SUPA_BASE_URL || process.env.SUPA_BASE_URL,
-  SUPABASE_KEY: process.env.SUPABASE_KEY || process.env.SUPA_BASE_API_KEY || process.env.SUPABASE_API_KEY,
+  OPENAI_API: process.env.OPEN_AI_API_KEY,
+  SUPABASE_URL: process.env.SUPA_BASE_URL,
+  SUPABASE_KEY: process.env.SUPA_BASE_API_KEY,
 };
 
 export default EnvConfig;
