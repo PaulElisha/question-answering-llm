@@ -1,63 +1,65 @@
 /** @format */
 
-import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
-import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { ChatOpenAI } from "@langchain/openai";
-import { PromptTemplate } from "@langchain/core/prompts";
+// /** @format */
 
-import { createClient } from "@supabase/supabase-js";
+// import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
+// import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
+// import { OpenAIEmbeddings } from "@langchain/openai";
+// import { ChatOpenAI } from "@langchain/openai";
+// import { PromptTemplate } from "@langchain/core/prompts";
 
-import fs from "node:fs/promises";
-import {
-  openAIApiKey,
-  supabaseUrl,
-  supabaseKey,
-} from "../../constants/Constants.js";
+// import { createClient } from "@supabase/supabase-js";
 
-try {
-  const data = await fs.readFile("info.txt", "utf-8");
+// import fs from "node:fs/promises";
+// import {
+//   openAIApiKey,
+//   supabaseUrl,
+//   supabaseKey,
+// } from "../../constants/Constants.js";
 
-  const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 1000,
-    separators: ["\n\n", "\n", " ", ""],
-    chunkOverlap: 200,
-  });
-  const chunks = await splitter.createDocuments([data]);
+// try {
+//   const data = await fs.readFile("info.txt", "utf-8");
 
-  await fs.writeFile("text.json", JSON.stringify(chunks, null, 2));
+//   const splitter = new RecursiveCharacterTextSplitter({
+//     chunkSize: 1000,
+//     separators: ["\n\n", "\n", " ", ""],
+//     chunkOverlap: 200,
+//   });
+//   const chunks = await splitter.createDocuments([data]);
 
-  // const client = createClient(supabaseUrl, supabaseKey);
+//   await fs.writeFile("text.json", JSON.stringify(chunks, null, 2));
 
-  // await SupabaseVectorStore.fromDocuments(
-  //   chunks,
-  //   new OpenAIEmbeddings({ openAIApiKey }),
-  //   {
-  //     client,
-  //     tableName: "documents",
-  //   }
-  // );
+//   // const client = createClient(supabaseUrl, supabaseKey);
 
-  // const llm = new ChatOpenAI({ openAIApiKey });
+//   // await SupabaseVectorStore.fromDocuments(
+//   //   chunks,
+//   //   new OpenAIEmbeddings({ openAIApiKey }),
+//   //   {
+//   //     client,
+//   //     tableName: "documents",
+//   //   }
+//   // );
 
-  // const tweetTemplate =
-  //   "Generate a promotional tweet for a product, from this product description: {productDesc}";
+//   // const llm = new ChatOpenAI({ openAIApiKey });
 
-  // const prompt = PromptTemplate.fromTemplate(tweetTemplate);
+//   // const tweetTemplate =
+//   //   "Generate a promotional tweet for a product, from this product description: {productDesc}";
 
-  // const chain = prompt.pipe(llm);
+//   // const prompt = PromptTemplate.fromTemplate(tweetTemplate);
 
-  // const response = await chain.invoke({
-  //   productDesc:
-  //     "The LangChain library is a powerful tool for building applications with LLMs.",
-  // });
+//   // const chain = prompt.pipe(llm);
 
-  // const prompt = new PromptTemplate({
-  //   template: tweetTemplate,
-  //   inputVariables: ["productDesc"],
-  // });
+//   // const response = await chain.invoke({
+//   //   productDesc:
+//   //     "The LangChain library is a powerful tool for building applications with LLMs.",
+//   // });
 
-  console.log();
-} catch (error) {
-  console.error("Internal Error", error);
-}
+//   // const prompt = new PromptTemplate({
+//   //   template: tweetTemplate,
+//   //   inputVariables: ["productDesc"],
+//   // });
+
+//   console.log();
+// } catch (error) {
+//   console.error("Internal Error", error);
+// }

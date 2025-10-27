@@ -14,7 +14,7 @@ class Runnables {
     return RunnableSequence.from(steps);
   }
 
-  RunnableWithMessageHistory() {
+  runnableWithMessageHistory(chain) {
     const messageHistory = new ChatMessageHistory();
 
     return new RunnableWithMessageHistory.from({
