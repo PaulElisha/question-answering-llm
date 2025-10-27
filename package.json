@@ -1,11 +1,11 @@
 {
   "name": "langchain_chatbot",
   "version": "1.0.0",
-  "main": "App.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/app.js",
-    "dev": "nodemon --exec babel-node src/app.js",
+    "start": "node dist/deeplearn.js",
+    "dev": "nodemon --exec babel-node src/deeplearn.js",
     "build": "babel src -d dist",
     "clean": "rm -rf dist",
     "rebuild": "npm run clean && npm run build",
@@ -15,7 +15,12 @@
     "install-legacy": "npm install --legacy-peer-deps",
     "git-refresh-case": "git rm --cached -r . || true && git add -A && git commit -m \"chore: refresh case-sensitive filenames\" || true",
     "fix-envconfig-case": "node -e \"const fs=require('fs'); if(fs.existsSync('config/envConfig.js')) fs.renameSync('config/envConfig.js','config/EnvConfig.js');\" || true",
-    "prebuild": "npm run clear-cache"
+    "prebuild": "npm run clear-cache",
+    "list-config": "ls -la config/",
+    "git-list-config": "git ls-files config/",
+    "git-clear-case": "git rm --cached config/envConfig.js 2>/dev/null || true && git add config/EnvConfig.js",
+    "verify-case": "npm run list-config && npm run git-list-config",
+    "fix-case": "npm run fix-envconfig-case && npm run git-clear-case && npm run verify-case"
   },
   "repository": "https://github.com/PaulElisha/QuoteGenerator.git",
   "author": "Paul Elisha <ireajao@yahoo.com>",
@@ -33,6 +38,7 @@
     "@langchain/core": "^0.3.78",
     "@langchain/openai": "^0.6.16",
     "@supabase/supabase-js": "^2.76.1",
-    "langchain": "^0.3.36"
+    "langchain": "^0.3.36",
+    "pdf-parse": "^1.1.1"
   }
 }
