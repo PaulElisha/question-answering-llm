@@ -99,7 +99,7 @@ class App {
 
     const options = {
       context: this.contextRetrievalChain,
-      question,
+      question: (input) => input.question,
     };
 
     const steps = [options, prompt, this.llm, this.outputParser];
@@ -135,10 +135,10 @@ class App {
 
     const steps = [
       RunnablePassthrough.assign({
-        question: this.rephraseQuestionChain(),
+        question: this.rephraseQuestionChain,
       }),
       RunnablePassthrough.assign({
-        context: this.contextRetrievalChain(),
+        context: this.contextRetrievalChain,
       }),
       answerPrompt,
       this.llm,
