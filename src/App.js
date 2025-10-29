@@ -2,7 +2,6 @@
 
 import { ChatOpenAI } from "@langchain/openai";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import { openAIApiKey } from "../constants/Constants.js";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import {
   SystemMessagePromptTemplate,
@@ -29,6 +28,7 @@ import { MemoryVectorStore } from "langchain/vectorstores/memory";
 import { VectorStore } from "@langchain/core/vectorstores";
 import { ChatMessageHistory } from "langchain/memory";
 
+import { openAIApiKey, port, hostname } from "../constants/Constants.js";
 import {
   LoadAndParseDocs,
   QUESTION_PROMPT,
@@ -36,6 +36,7 @@ import {
 } from "./loader/loader.js";
 import { VectorService } from "./services/vectorService.js";
 import { Runnables } from "./runnables/runnables.js";
+import { connectDb } from "../config/connectDb.js";
 
 import express from "express";
 
@@ -47,7 +48,6 @@ class App {
     this.runnable = new Runnables();
     this.outputParser = new StringOutputParser();
     this.app = express();
-    this.initialize();
     this.initializeMiddleware();
     this.initializeRoutes();
   }
@@ -85,24 +85,10 @@ class App {
   contextRetrievalChain() {
     const steps = [
       (input) => input.question,
-      this.vectorService.getRetriever,
+      this.vectorService.getRetriever(),
       this.loader.parseDocs.bind(this.loader),
     ];
 
-    return this.runnable.createChain(steps);
-  }
-
-  answerChain() {
-    const prompt = ChatPromptTemplate.fromTemplate(
-      QUESTION_PROMPT[QUESTIONS[1]]
-    );
-
-    const options = {
-      context: this.contextRetrievalChain,
-      question: (input) => input.question,
-    };
-
-    const steps = [options, prompt, this.llm, this.outputParser];
     return this.runnable.createChain(steps);
   }
 
@@ -135,10 +121,10 @@ class App {
 
     const steps = [
       RunnablePassthrough.assign({
-        question: this.rephraseQuestionChain,
+        question: this.rephraseQuestionChain(),
       }),
       RunnablePassthrough.assign({
-        context: this.contextRetrievalChain,
+        context: this.contextRetrievalChain(),
       }),
       answerPrompt,
       this.llm,
@@ -153,19 +139,23 @@ class App {
   }
 
   async askQuestion(question) {
-    const answer = await this.finalResponseChain.invoke(question, {
+    this.initialize();
+
+    const data = await this.finalResponseChain.invoke(question, {
       configurable: { sessionId: "test" },
     });
 
     return {
       status: "ok",
-      data: answer,
+      success: data.success,
+      answer: data.answer,
     };
   }
 
   startServer() {
-    this.app.listen(PORT, () => {
-      console.log(`Server running at http://${HOST_NAME}:${PORT}`);
+    new connectDb();
+    this.app.listen(port, () => {
+      console.log(`Server running at http://${hostname}:${port}`);
     });
   }
 }

@@ -11,7 +11,7 @@ class VectorService {
     await this.dataStore.addDocuments(textChunks);
   }
 
-  static getRetriever() {
+  getRetriever() {
     return this.dataStore.asRetriever();
   }
 }

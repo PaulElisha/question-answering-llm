@@ -8,18 +8,18 @@ import {
 import { ChatMessageHistory } from "langchain/memory";
 
 class Runnables {
-  constructor() {}
+  constructor() {
+    this.messageHistory = new ChatMessageHistory();
+  }
 
   createChain(steps) {
     return RunnableSequence.from(steps);
   }
 
-  runnableWithMessageHistory(chain) {
-    const messageHistory = new ChatMessageHistory();
-
+  runnableWithMessageHistory(conversationChain) {
     return new RunnableWithMessageHistory.from({
-      runnable: chain,
-      getMessageHistory: (sessionId) => messageHistory,
+      runnable: conversationChain,
+      getMessageHistory: (sessionId) => this.messageHistory,
       history: "history",
       inputKey: "question",
     });
