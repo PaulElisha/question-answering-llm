@@ -304,7 +304,7 @@
 // const retriever = vectorStore.asRetriever();
 
 // const convertDocsToString = (docs) => {
-//   return docs.map((doc) => doc.pageContent).join("\n");
+//   return docs.map((doc) => doc.pageContent).join("\n\n");
 // };
 
 // const contextChain = RunnableSequence.from([

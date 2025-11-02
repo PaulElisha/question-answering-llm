@@ -7,7 +7,7 @@ import {
 
 import { ChatMessageHistory } from "langchain/memory";
 
-class Runnables {
+class Runnable {
   constructor() {
     this.messageHistory = new ChatMessageHistory();
   }
@@ -26,4 +26,4 @@ class Runnables {
   }
 }
 
-export { Runnables };
+export { Runnable };
