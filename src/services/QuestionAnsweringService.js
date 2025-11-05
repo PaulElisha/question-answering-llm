@@ -1,6 +1,7 @@
 /** @format */
 
-import { LangChainService } from "./langChainService";
+import { LangChainService } from "../LangChainService";
+import { UserModel } from "../models/UserModel.js";
 
 class QuestionAnsweringService {
   constructor() {
@@ -10,12 +11,23 @@ class QuestionAnsweringService {
   }
 
   async askQuestion(question, userId) {
-    await this.langChainService.initialize();
+    if (!this.langChainService.isInitialized) {
+      throw new Error("The langchain service not initialized!");
+    }
 
-    const data = await this.langChainService.answerChain.invoke(question, {
-      configurable: { sessionId: userId },
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      throw new Error("User not found!");
+    }
+
+    if (user._id.toString() !== userId) {
+      throw new Error("Unauthorized access!");
+    }
+
+    const data = await this.langChainService.answerChain().invoke({
+      question,
+      userId,
     });
-
     return {
       status: "ok",
       success: data.success,

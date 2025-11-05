@@ -1,7 +1,8 @@
 /** @format */
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { MemoryVectorStore } from "langchain/vectorstores/memory";
-class VectorService {
+
+class VectorConfig {
   constructor(openAIApiKey) {
     this.embeddings = new OpenAIEmbeddings({ openAIApiKey });
     this.dataStore = new MemoryVectorStore(this.embeddings);
@@ -11,9 +12,9 @@ class VectorService {
     await this.dataStore.addDocuments(textChunks);
   }
 
-  getRetriever() {
+  query() {
     return this.dataStore.asRetriever();
   }
 }
 
-export { VectorService };
+export { VectorConfig };

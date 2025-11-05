@@ -5,6 +5,7 @@ import { mongoUri } from "../constants/Constants";
 
 class connectDb {
   constructor() {
+    this.connected = false;
     this.connectDB();
   }
 
@@ -12,6 +13,7 @@ class connectDb {
     mongoose.connect(mongoUri);
 
     mongoose.connection.on("connected", () => {
+      this.connected = true;
       console.log("MongoDB connected successfully");
     });
 

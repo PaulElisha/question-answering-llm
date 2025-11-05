@@ -1,6 +1,6 @@
 /** @format */
 
-import { QuestionAnsweringService } from "../services/QuestionAnsweringService.js";
+import { QuestionAnsweringService } from "./QuestionAnsweringService.js";
 
 class QuestionAnsweringController {
   constructor() {
@@ -12,16 +12,18 @@ class QuestionAnsweringController {
     const question = req.body.question;
 
     try {
-      const response = this.questionAnsweringService.askQuestion(
+      const response = await this.questionAnsweringService.askQuestion(
         question,
         userId
       );
       res.status(200).json({
         status: response.status,
         success: response.success,
-        answer: (await response).answer,
+        answer: response.answer,
       });
-    } catch (error) {}
+    } catch (error) {
+      res.status(500).json({ status: "error", message: error.message });
+    }
   }
 }
 

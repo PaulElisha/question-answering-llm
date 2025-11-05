@@ -2,36 +2,36 @@
 
 import { RunnablePassthrough } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
+import { ChatOpenAI } from "@langchain/openai";
 
-import { VectorService } from "./vectorService";
+import { VectorConfig } from "../config/vectorConfig";
 
 import { LoadAndParseDocs, QUESTIONS, QUESTION_PROMPT } from "../utils/loader";
 import { openAIApiKey } from "../../constants/Constants";
 import { Runnable } from "../utils/runnables";
-import { ChatOpenAI } from "@langchain/openai";
 
 class LangChainService {
   constructor(url) {
     this.loader = new LoadAndParseDocs(url);
-    this.vectorService = new VectorService(openAIApiKey);
+    this.vectorConfig = new VectorConfig(openAIApiKey);
     this.runnable = new Runnable();
     this.llm = new ChatOpenAI({ openAIApiKey });
     this.outputParser = new StringOutputParser();
+    this.isInitialized = false;
+    this.configDataStore();
   }
 
-  async initialize() {
-    await this.dataStore();
-  }
-
-  async dataStore() {
+  async configDataStore() {
     const textChunks = await this.loader.loadAndSplitDocs();
-    await this.vectorService.addDocuments(textChunks);
+    await this.vectorConfig.addDocuments(textChunks);
+    this.answerChain();
+    this.isInitialized = true;
   }
 
   contextRetrievalChain() {
     const steps = [
       (input) => input.question,
-      this.vectorService.getRetriever(),
+      this.vectorConfig.query(),
       this.loader.parseDocs.bind(this.loader),
     ];
 
