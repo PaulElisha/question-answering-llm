@@ -24,10 +24,9 @@ class QuestionAnsweringService {
       throw new Error("Unauthorized access!");
     }
 
-    const data = await this.langChainService.answerChain().invoke({
-      question,
-      userId,
-    });
+    const data = await this.langChainService
+      .answerChain()
+      .invoke({ question }, { configurable: { sessionId: `thread-id-${Date.now()}` } });
     return {
       status: "ok",
       success: data.success,

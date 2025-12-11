@@ -3,13 +3,8 @@
 import mongoose from "mongoose";
 import { mongoUri } from "../constants/Constants";
 
-class connectDb {
-  constructor() {
-    this.connected = false;
-    this.connectDB();
-  }
-
-  connectDB() {
+class Db {
+  connect() {
     mongoose.connect(mongoUri);
 
     mongoose.connection.on("connected", () => {
@@ -18,9 +13,10 @@ class connectDb {
     });
 
     mongoose.connection.on("error", (err) => {
+      this.connected = false;
       console.error("Error connection failed:", err.message);
     });
   }
 }
 
-export { connectDb };
+export { Db };

@@ -68,14 +68,14 @@ class LangChainService {
     const steps = [
       RunnablePassthrough.assign({
         standAloneQuestion: this.standAloneQuestionChain(),
-        originalQuestion: (input) => input.question,
+        original_input: (input) => input.question,
       }),
       RunnablePassthrough.assign({
-        context: (input) =>
+        context: ({ input }) =>
           this.contextRetrievalChain().invoke({
             question: input.standAloneQuestion,
           }),
-        question: (input) => input.originalQuestion,
+        question: ({ original_input }) => original_input.question,
       }),
       answerPrompt,
       this.llm,

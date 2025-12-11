@@ -3,8 +3,8 @@
 import express from "express";
 import cors from "cors";
 
-import { port, hostname } from "../constants/Constants.js";
-import { connectDb } from "../config/connectDb.js";
+import { port, hostname } from "./constants/Constants.js";
+import { Db } from "./config/connectDb.js";
 
 import { QuestionAnsweringRouter } from "./routes/QuestionAnsweringRoute.js";
 
@@ -13,11 +13,16 @@ class App {
     this.app = express();
     this.initializeMiddleware();
     this.initializeRoutes();
-    this.db = new connectDb();
+    this.db = new Db();
+    this.db.connect();
   }
 
   initializeMiddleware() {
-    this.app.use(cors("*"));
+    this.app.use(
+      cors({
+        origin: "*",
+      })
+    );
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
   }
@@ -27,10 +32,7 @@ class App {
   }
 
   startServer() {
-    if (!this.db.connected) {
-      console.log("Database not connected yet. Please wait...");
-      return;
-    }
+    this.db.connect();
     this.app.listen(port, () => {
       console.log(`Server running at http://${hostname}:${port}`);
     });

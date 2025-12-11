@@ -1,11 +1,11 @@
 {
   "name": "langchain_chatbot",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "dist/app.js",
   "type": "module",
   "scripts": {
-    "start": "node dist/deeplearn.js",
-    "dev": "nodemon --exec babel-node src/deeplearn.js",
+    "start": "node src/app.js",
+    "dev": "nodemon --exec babel-node src/app.js",
     "build": "babel src -d dist",
     "clean": "rm -rf dist",
     "rebuild": "npm run clean && npm run build",
@@ -18,11 +18,11 @@
     "prebuild": "npm run clear-cache",
     "list-config": "ls -la config/",
     "git-list-config": "git ls-files config/",
-    "git-clear-case": "git rm --cached config/envConfig.js 2>/dev/null || true && git add config/EnvConfig.js",
+    "git-clear-case": "git rm --cached constants/Constants.js 2>/dev/null || true && git add constants/constants.js",
     "verify-case": "npm run list-config && npm run git-list-config",
     "fix-case": "npm run fix-envconfig-case && npm run git-clear-case && npm run verify-case"
   },
-  "repository": "https://github.com/PaulElisha/QuoteGenerator.git",
+  "repository": "https://github.com/PaulElisha/AIChatflow-api.git",
   "author": "Paul Elisha <ireajao@yahoo.com>",
   "license": "MIT",
   "devDependencies": {

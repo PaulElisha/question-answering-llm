@@ -2,13 +2,25 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env" });
 
-const EnvConfig = {
-  OPENAI_API: process.env.OPENAI_API_KEY,
-  SUPABASE_URL: process.env.SUPABASE_URL,
-  SUPABASE_KEY: process.env.SUPABASE_API_KEY,
-  MONGO_URI: process.env.MONGO_URI,
-  PORT: process.env.PORT,
-  HOST_NAME: process.env.HOST_NAME,
+const getEnvConfig = () => {
+  const getEnv = (key) => {
+    const value = process.env[key];
+    if (!value) {
+      throw new Error(`Missing environment variable: ${key}`);
+    }
+    return value;
+  };
+
+  return {
+    OPENAI_API_KEY: getEnv("OPENAI_API_KEY"),
+    SUPABASE_URI: getEnv("SUPABASE_URI"),
+    SUPABASE_API_KEY: getEnv("SUPABASE_API_KEY"),
+    MONGO_URI: getEnv("MONGO_URI"),
+    PORT: getEnv("PORT"),
+    HOST_NAME: getEnv("HOST_NAME"),
+  };
 };
 
-export default EnvConfig;
+const envconfig = getEnvConfig();
+
+export default envconfig;

@@ -8,8 +8,8 @@ class QuestionAnsweringController {
   }
 
   async askQuestion(req, res) {
-    const userId = req.user._id;
-    const question = req.body.question;
+    const { userId } = req.user;
+    const { question } = req.body;
 
     try {
       const response = await this.questionAnsweringService.askQuestion(
