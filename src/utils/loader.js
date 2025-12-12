@@ -1,6 +1,7 @@
 /** @format */
 
-import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
+import { CSVLoader } from "@langchain/community/document_loaders/fs/csv";
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 export const QUESTIONS = {
   1: "What is a system archetype?",
@@ -45,9 +46,10 @@ export const QUESTION_PROMPT = {
   [QUESTIONS[1]]: PROMPT_TEMPLATES.ANSWER_PROMPT_TEMPLATE,
   [QUESTIONS[2]]: PROMPT_TEMPLATES.REPHRASE_QUESTION_PROMPT_TEMPLATE,
 };
+
 class LoadAndParseDocs {
   constructor(url) {
-    this.loader = new PDFLoader(url);
+    this.loader = new CSVLoader(url);
   }
 
   async loadAndSplitDocs(chunkSize = 500, chunkOverlap = 50) {

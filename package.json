@@ -14,7 +14,7 @@
     "clear-cache": "rm -rf node_modules/.cache dist",
     "install-legacy": "npm install --legacy-peer-deps",
     "git-refresh-case": "git rm --cached -r . || true && git add -A && git commit -m \"chore: refresh case-sensitive filenames\" || true",
-    "fix-envconfig-case": "node -e \"const fs=require('fs'); if(fs.existsSync('config/envConfig.js')) fs.renameSync('config/envConfig.js','config/EnvConfig.js');\" || true",
+    "fix-envconfig-case": "node -e \"const fs=require('fs'); if(fs.existsSync('constants/Constants.js')) fs.renameSync('constants/constants.js','constants/constants.js');\" || true",
     "prebuild": "npm run clear-cache",
     "list-config": "ls -la config/",
     "git-list-config": "git ls-files config/",
@@ -38,16 +38,12 @@
     "@langchain/core": "^0.3.78",
     "@langchain/openai": "^0.6.16",
     "@supabase/supabase-js": "^2.76.1",
-    "add": "^2.0.6",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "d3-dsv": "^2.0.0",
     "express": "^5.1.0",
-    "express-session": "^1.18.2",
     "langchain": "^0.3.36",
-    "ml-distance": "^4.0.1",
     "mongodb": "^6.20.0",
-    "mongoose": "^8.19.2",
-    "pdf-parse": "^1.1.1",
-    "yarn": "^1.22.22"
+    "mongoose": "^8.19.2"
   }
 }

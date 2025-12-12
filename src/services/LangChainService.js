@@ -4,11 +4,15 @@ import { RunnablePassthrough } from "@langchain/core/runnables";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatOpenAI } from "@langchain/openai";
 
-import { VectorConfig } from "../config/vectorConfig";
+import { VectorConfig } from "../config/vectorConfig.js";
 
-import { LoadAndParseDocs, QUESTIONS, QUESTION_PROMPT } from "../utils/loader";
-import { openAIApiKey } from "../../constants/Constants";
-import { Runnable } from "../utils/runnables";
+import {
+  LoadAndParseDocs,
+  QUESTIONS,
+  QUESTION_PROMPT,
+} from "../utils/loader.js";
+import { openAIApiKey } from "../constants/constants.js";
+import { Runnable } from "../utils/runnables.js";
 
 class LangChainService {
   constructor(url) {

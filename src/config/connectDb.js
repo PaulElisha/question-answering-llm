@@ -1,7 +1,7 @@
 /** @format */
 
 import mongoose from "mongoose";
-import { mongoUri } from "../constants/Constants";
+import { mongoUri } from "../constants/constants.js";
 
 class Db {
   connect() {

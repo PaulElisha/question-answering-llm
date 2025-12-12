@@ -1,32 +1,27 @@
 /** @format */
 
-import { LangChainService } from "../LangChainService";
-import { UserModel } from "../models/UserModel.js";
+import { LangChainService } from "./LangChainService.js";
 
 class QuestionAnsweringService {
+  // test/info.txt
+  // /Users/paulelisha/repositories/question-answering-AI/test/info.csv
   constructor() {
     this.langChainService = new LangChainService(
-      "./documents/system-archetypes.pdf"
+      "/Users/paulelisha/repositories/question-answering-AI/test/info.csv"
     );
   }
 
-  async askQuestion(question, userId) {
+  async askQuestion(question) {
     if (!this.langChainService.isInitialized) {
       throw new Error("The langchain service not initialized!");
     }
 
-    const user = await UserModel.findById(userId);
-    if (!user) {
-      throw new Error("User not found!");
-    }
-
-    if (user._id.toString() !== userId) {
-      throw new Error("Unauthorized access!");
-    }
-
     const data = await this.langChainService
       .answerChain()
-      .invoke({ question }, { configurable: { sessionId: `thread-id-${Date.now()}` } });
+      .invoke(
+        { question },
+        { configurable: { sessionId: `thread-id-${Date.now()}` } }
+      );
     return {
       status: "ok",
       success: data.success,

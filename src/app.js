@@ -3,7 +3,7 @@
 import express from "express";
 import cors from "cors";
 
-import { port, hostname } from "./constants/Constants.js";
+import { port, hostname } from "./constants/constants.js";
 import { Db } from "./config/connectDb.js";
 
 import { QuestionAnsweringRouter } from "./routes/QuestionAnsweringRoute.js";
